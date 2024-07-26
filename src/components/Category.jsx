@@ -7,7 +7,7 @@ const Category = (props) => {
     <li>
       <Link className="" href={props.href}>
         <img
-          className="w-[175px] h-[175px] border-4 border-yellow rounded-3xl object-cover"
+          className="w-full h-[175px] border-4 border-yellow rounded-3xl object-cover"
           src={props.src}
         ></img>
         <div className="flex justify-center">

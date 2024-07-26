@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { getDocs } from "@/utils/firestore";
+import { getDocs, getDoc } from "@/utils/firestore";
 import { useSearchParams } from "next/navigation";
 import Title from "@/components/UI/Title";
 import Food from "@/components/Food";
@@ -21,9 +21,8 @@ const page = ({ params: { menuId } }) => {
     const res = await getDocs("");
     setCategoryName(res);
   };
-  console.log(categoryName);
   return (
-    <div className="text-white">
+    <div className="text-white flex flex-col flex-1 bg-black">
       {categoryName.map((item) => {
         if (item.id == menuId) {
           return (

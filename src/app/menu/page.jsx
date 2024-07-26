@@ -1,5 +1,5 @@
 "use client";
-import { getDocs } from "@/utils/firestore";
+import { getDocs, getDoc } from "@/utils/firestore";
 import { useEffect, useState } from "react";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -9,7 +9,7 @@ import Title from "@/components/UI/Title";
 export default function page() {
   const searchIcon = (
     <FontAwesomeIcon
-      className="text-black absolute top-[95px] font-thin left-10 text-xl"
+      className="text-black absolute top-[18px] font-thin left-10 text-xl"
       icon={faMagnifyingGlass}
     />
   );
@@ -19,7 +19,9 @@ export default function page() {
   const [categories, setCategories] = useState([]);
   const [filter, setFilter] = useState("");
   const filteredCategories = categories.filter((category) => {
-    return category.name.includes(filter);
+    return category.name
+      .toLocaleLowerCase()
+      .includes(filter.toLocaleLowerCase());
   });
   const getCategories = async () => {
     const data = await getDocs("");
@@ -32,8 +34,8 @@ export default function page() {
   };
 
   return (
-    <div className="w-full flex flex-col pt-3  justify-center items-center bg-black ">
-      <div className="w-full px-6">
+    <div className="w-full flex flex-col pt-3 flex-1 items-center bg-black ">
+      <div className="w-full px-6 relative">
         <input
           value={filter}
           onChange={filterHandler}
@@ -44,7 +46,7 @@ export default function page() {
         {searchIcon}
         <Title content="Kategoriler" />
       </div>
-      <ul className="grid px-3 gap-6 grid-cols-2">
+      <ul className="grid w-full px-3 gap-6 grid-cols-2">
         {!filter &&
           categories.map((item) => {
             return (

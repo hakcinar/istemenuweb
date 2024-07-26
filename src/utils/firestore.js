@@ -7,5 +7,10 @@ const getDocs = async (docName) => {
     const docData = items.docs.map((item) => { return item.data() })
     return docData
 }
+const getDoc = async (documnetId) => {
+    console.log(documnetId)
+    const item = await firebaseGetDocs(collection(db, `database/dev/restaurants/sakli@gmail.com/menu`, `${documnetId}`));
+    console.log(item);
+}
 export default db;
-export { getDocs }
+export { getDocs, getDoc }

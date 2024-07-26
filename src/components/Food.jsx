@@ -14,7 +14,7 @@ const Food = ({ alt, name, src, price, href }) => {
       className="w-full py-5 flex px-5 border-4 mb-6 border-yellow rounded-xl"
     >
       <img
-        className="w-[100px] h-[100px] object-cover rounded-xl"
+        className="object-cover w-[125px] h-[125px] rounded-xl"
         alt={alt}
         src={src}
       />
