@@ -1,36 +1,46 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# iSTE QR Menü Uygulaması
 
-## Getting Started
+iSTE, restoran müşterilerinin mobil cihazlarından menüleri görüntülemelerine, sipariş vermelerine ve garson çağırmalarına olanak tanıyan modern bir QR menü uygulamasıdır.
 
-First, run the development server:
+![iSTE Demo](https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExcGNzbXBhOW05bnUzaGI5aHNtdWtlN2d1bG0ycTg2ZG5jbHc1bzk1NyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/Z8soyGxWRHkh9VBOei/giphy.gif)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Özellikler
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- 📱 Tüm cihazlar için responsive tasarım
+- 🔍 Kategorilere göre kolay menü navigasyonu
+- 🛒 Sepet fonksiyonu
+- 💳 Sipariş verme sistemi
+- 🔔 Garson çağırma sistemi
+- 🧾 Hesap isteme özelliği
+- 🌙 Koyu tema tasarımı
+- ⚡ Gerçek zamanlı güncellemeler
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## Kullanılan Teknolojiler
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+### Frontend
+- [Next.js 14](https://nextjs.org/) - React Framework
+- [Tailwind CSS](https://tailwindcss.com/) - Stil ve tasarım
+- [React Toastify](https://fkhadra.github.io/react-toastify/) - Bildirimler
+- [FontAwesome](https://fontawesome.com/) - İkonlar
+- [Heroicons](https://heroicons.com/) - UI İkonları
 
-## Learn More
+### Backend & Veritabanı
+- [Firebase](https://firebase.google.com/)
+  - Firestore - Veritabanı
+  - Gerçek zamanlı güncellemeler
+  - Kimlik doğrulama
 
-To learn more about Next.js, take a look at the following resources:
+## Ekran Görüntüleri
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Menü Sayfaları
+![Kategori Sayfası](screenshots/categories.png) <!-- Ekran görüntülerinizi ekleyin -->
+![Yemek Listesi](screenshots/foods.png)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+### Sipariş Süreci
+![Yemek Detay](screenshots/food-detail.png)
+![Alışveriş Sepeti](screenshots/cart.png)
 
-## Deploy on Vercel
+### Garson Çağırma
+![Garson Çağır](screenshots/call-waiter.png)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Proje Yapısı
