@@ -1,29 +1,63 @@
 "use client";
-import React from "react";
-import {
-  faCartShopping,
-  faShop,
-  faBell,
-  faUser,
-} from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import NavLink from "./NavLink";
+import React, { useEffect, useState } from 'react';
+import { usePathname, useRouter } from 'next/navigation';
+import NavLink from './NavLink';
+import { faUser, faCartShopping } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { MdRestaurant } from 'react-icons/md';
 
-const NavBar = () => {
-  const basketIcon = (
-    <FontAwesomeIcon className="text-2xl" icon={faCartShopping} />
-  );
-  const shopIcon = <FontAwesomeIcon className="text-2xl" icon={faShop} />;
-  const bellIcon = <FontAwesomeIcon className="text-2xl" icon={faBell} />;
-  const profileIcon = <FontAwesomeIcon className="text-2xl" icon={faUser} />;
+const Navbar = () => {
+  const router = useRouter();
+  const pathname = usePathname();
+  const [navigationPath, setNavigationPath] = useState('');
+
+  const shopIcon = <MdRestaurant className="text-xl mb-1" />;
+  const userIcon = <FontAwesomeIcon className="text-xl mb-1" icon={faUser} />;
+  const cartIcon = <FontAwesomeIcon className="text-xl mb-1" icon={faCartShopping} />;
+  useEffect(() => {
+
+    const restaurantNo = localStorage.getItem('restaurantNo');
+    const tableNo = localStorage.getItem('tableNo');
+
+    if (restaurantNo && tableNo) {
+      const newPath = `/${restaurantNo.split('/')[0]}/${tableNo}`;
+      setNavigationPath(newPath);
+    }
+  }, [pathname]);
+
   return (
-    <nav className="text-white bg-black px-6 pt-4 w-full max-w-[520px]  flex justify-between items-center sticky bottom-0 z-10">
-      <NavLink href={"/menu"} icon={shopIcon} text={"Menu"} />
-      <NavLink href={"/basket"} icon={basketIcon} text={"Sepet"} />
-      <NavLink href={"/callwaiter"} icon={bellIcon} text={"Garson"} />
-      <NavLink href={"/account"} icon={profileIcon} text={"Hesap"} />
+    <nav className="bg-black sticky bottom-0 px-4 pt-3 w-full">
+      <div className="container flex justify-between items-center">
+        <NavLink
+          href={`${navigationPath}` || '/'}
+          className="text-xl font-bold"
+          icon={shopIcon}
+          alt="FooodBank"
+          text="Menu"
+          Category="menu"
+        >
+        </NavLink >
+        <NavLink
+          href={`${navigationPath}/basket`}
+          className="text-xl font-bold"
+          icon={cartIcon}
+          alt="cart"
+          text="Sepet"
+          Category="basket"
+        >
+        </NavLink >
+        <NavLink
+          href={`${navigationPath}/callWaiter`}
+          className="text-xl font-bold"
+          icon={userIcon}
+          alt="Garson Çağır"
+          text="Garson"
+          Category="callWaiter"
+        >
+        </NavLink >
+      </div>
     </nav>
   );
 };
 
-export default NavBar;
+export default Navbar;

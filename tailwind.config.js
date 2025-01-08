@@ -7,6 +7,10 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['Poppins', 'sans-serif'], 
+        poppins: ['Poppins', 'sans-serif'],
+      },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
@@ -16,7 +20,21 @@ module.exports = {
         yellow: '#FEFE00',
         blue: '#222831',
         white: '#ffffff',
-        black: '#000000'
+        black: '#000000',
+        gray: '#2F2D2D',
+      },
+      animation: {
+        'bounce': 'bounce 1s infinite',
+      },
+      keyframes: {
+        bounce: {
+          '0%, 100%': {
+            transform: 'translateY(0)',
+          },
+          '50%': {
+            transform: 'translateY(-10px)',
+          },
+        },
       },
     },
   },

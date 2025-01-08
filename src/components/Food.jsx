@@ -1,33 +1,24 @@
 import React from "react";
 import Link from "next/link";
-import { faStar } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const Food = ({ alt, name, src, price, href }) => {
-  const starIcon = (
-    <FontAwesomeIcon className="text-yellow mr-1" icon={faStar} />
-  );
-  const foodPoint = "4.9";
+const Food = ({ alt, name, src, price, href, preparationTime }) => {
   return (
     <Link
       href={href}
-      className="w-full py-5 flex px-5 border-4 mb-6 border-yellow rounded-xl"
+      className="w-full bg-gray py-4 flex px-4 mb-2 rounded-xl"
     >
       <img
-        className="object-cover w-[125px] h-[125px] rounded-xl"
+        className="object-cover w-[75px] h-[75px] rounded-xl"
         alt={alt}
         src={src}
       />
       <div className="flex flex-col px-4 ">
-        <h5 className="text-yellow text-m mb-2">{name}</h5>
-        <span className="text-yellow text-m mb-2">Fiyat : {price}₺</span>
+        <h5 className="text-white text-sm font-bold mb-2">{name}</h5>
+        <span className="text-white text-sm mb-2"> <span className="font-bold">Fiyat: </span>{price}₺</span>
         <div>
-          {starIcon}
-          {starIcon}
-          {starIcon}
-          {starIcon}
-          {starIcon}
-          <span className="text-yellow">({foodPoint})</span>
+          <span className="text-white text-sm">
+              <span className="font-bold">Hazırlanma Süresi: </span>{preparationTime}
+          </span>
         </div>
       </div>
     </Link>
