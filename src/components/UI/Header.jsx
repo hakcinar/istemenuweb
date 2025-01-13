@@ -31,7 +31,7 @@ export default function Header() {
     <header className="sticky top-0 z-50 bg-black">
       <div className="flex justify-between items-center px-4 py-4">
         <h1 className="text-yellow text-3xl font-extrabold">iste</h1>
-        <h1 className="text-yellow text-lg font-bold">{title}</h1>
+        <h1 className="text-yellow text-2xl font-bold">{title}</h1>
       </div>
     </header>
   );
