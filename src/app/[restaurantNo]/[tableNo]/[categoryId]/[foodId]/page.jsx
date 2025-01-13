@@ -8,7 +8,7 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Loader from "@/components/loader";
 
-const page = ({ params: { foodId, categoryId, restaurantNo } }) => {
+const Page = ({ params: { foodId, categoryId, restaurantNo } }) => {
   const basketIcon = (
     <FontAwesomeIcon className="text-lg" icon={faCartShopping} />
   );
@@ -142,4 +142,4 @@ const page = ({ params: { foodId, categoryId, restaurantNo } }) => {
   );
 };
 
-export default page;
+export default Page;

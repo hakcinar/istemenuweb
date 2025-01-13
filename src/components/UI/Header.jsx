@@ -1,40 +1,46 @@
-"use client"
-import React, { useEffect, useState } from "react";
-import Link from "next/link";
+"use client";
+import { usePathname } from 'next/navigation';
+import { useEffect, useState } from 'react';
 import { getRestaurantName } from "@/utils/firestore";
+import { Poppins } from 'next/font/google';
 
-const Header = () => {
-  const [restaurantName, setRestaurantName] = useState("");
+const poppins = Poppins({
+  weight: ['400', '500', '600', '700'],
+  subsets: ['latin'],
+  display: 'swap',
+});
 
-  const updateRestaurantName = async () => {
-    const restaurantNo = localStorage.getItem('restaurantNo');
-    if (restaurantNo) {
-      const restaurant = await getRestaurantName(restaurantNo);
-      setRestaurantName(restaurant.name);
-    }
-  };
+export default function Header() {
+  const [title, setTitle] = useState("");
+  const pathname = usePathname();
 
   useEffect(() => {
-    updateRestaurantName();
-    
-    window.addEventListener('restaurantChanged', updateRestaurantName);
-    
-    return () => {
-      window.removeEventListener('restaurantChanged', updateRestaurantName);
+    const updateTitle = async () => {
+      try {
+        const pathParts = pathname.split('/');
+        const restaurantNo = pathParts[1];
+
+        if (restaurantNo) {
+          const restaurant = await getRestaurantName(restaurantNo);
+          if (restaurant?.name) {
+            setTitle(restaurant.name);
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching restaurant name:", error);
+      }
     };
-  }, []);
+
+    updateTitle();
+  }, [pathname]);
 
   return (
-    <header className="w-full flex justify-between items-center py-3 px-6 bg-black text-yellow">
-      <Link 
-        href={`/${localStorage.getItem('restaurantNo')}/${localStorage.getItem('tableNo')}`} 
-        className="text-4xl font-extrabold"
-      >
-        iste
-      </Link>
-      <h2 className="text-l font-extrabold">{restaurantName}</h2>
+    <header className={`sticky top-0 z-50 bg-black ${poppins.className}`}>
+      <div className="flex justify-between items-center px-4 py-4">
+        <h1 className="text-yellow text-3xl font-extrabold">İste</h1>
+        <h1 className="text-yellow text-lg font-bold">{title}</h1>
+      </div>
     </header>
   );
-};
+}
 
-export default Header;

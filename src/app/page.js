@@ -3,7 +3,8 @@ import { getRestaurantList } from "@/utils/firestore"
 import { useEffect, useState } from "react"
 import Restaurant from "@/components/Restaurant"
 import Loader from "@/components/loader"
-const page = () => {
+
+const Page = () => {
   const [restaurants, setRestaurants] = useState([])
   const [loading, setLoading] = useState(true)
   useEffect(() => {
@@ -17,10 +18,10 @@ const page = () => {
 
 
   return (
-    <div className='flex flex-col flex-1 bg-black text-white px-4'>
+    <div className='flex flex-col  flex-1 bg-black text-white px-4'>
       {loading ? <Loader /> : (
         restaurants.map((restaurant, index) => (
-          <div key={index}>
+          <div className="hidden" key={index}>
             <Restaurant restaurant={restaurant} />
           </div>
         ))
@@ -30,4 +31,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page

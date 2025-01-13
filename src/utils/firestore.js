@@ -54,7 +54,7 @@ const setOrder = async (orderData, restaurantNo, tableNo) => {
       orders: orderData,
       tableNo: tableNo,
       timestamp: new Date(),
-      status: "pending"
+      status: "preparing"
     })
     return true
   } catch (error) {
@@ -62,18 +62,77 @@ const setOrder = async (orderData, restaurantNo, tableNo) => {
     return false
   }
 }
-export const setWaiterCall = async (restaurantNo, tableNo, isBillRequest = false) => {
+const getOrder = async (restaurantNo, tableNo) => {
+    const order = await firebaseGetDoc(doc(db, `database/dev/restaurants/${restaurantNo}/orders/${tableNo}`))
+    return order.data()
+}
+export const getWaiterList = async (restaurantNo) => {
     try {
-        const callRef = doc(db, 'restaurants', restaurantNo, 'tables', tableNo, 'calls', new Date().getTime().toString());
-        await setDoc(callRef, {
-            timestamp: serverTimestamp(),
-            type: isBillRequest ? 'bill' : 'waiter',
-            status: 'pending'
+        const waiters = await firebaseGetDocs(collection(db, `database/dev/restaurants/${restaurantNo}/waiters`));
+        const waiterList = waiters.docs.map(doc => {
+            const data = doc.data();
+            console.log('Waiter data:', data);
+            return { 
+                id: doc.id, 
+                ...data,
+                fcmToken: data.fcmToken || null
+            };
         });
+        console.log('Full waiter list:', waiterList);
+        return waiterList;
     } catch (error) {
-        console.error("Error setting waiter call: ", error);
-        throw error;
+        console.error("Error getting waiter list:", error);
+        return [];
     }
 };
-export default db;
-export { getDocs, getDoc, getFood, setFood, getTableList, getRestaurantList,getRestaurantName, setOrder }
+ const assignWaiter = async (restaurantNo) => {
+    try {
+        // Son atanan garson indexini al
+        const restaurantRef = doc(db, `database/dev/restaurants/${restaurantNo}`);
+        const restaurantDoc = await firebaseGetDoc(restaurantRef);
+        let lastAssignedIndex = restaurantDoc.data()?.lastAssignedWaiterIndex ?? -1;
+        console.log('Last assigned index:', lastAssignedIndex);
+
+        // Garson listesini al
+        const waiters = await getWaiterList(restaurantNo);
+        console.log('Retrieved waiters:', waiters);
+
+        if (!waiters.length) {
+            console.log('No waiters found');
+            return null;
+        }
+
+        const totalWaiters = waiters.length;
+        let nextIndex = lastAssignedIndex;
+        let assignedWaiter = null;
+
+        // Round-robin dağıtım
+        for (let i = 0; i < totalWaiters; i++) {
+            nextIndex = (nextIndex + 1) % totalWaiters;
+            const waiter = waiters[nextIndex];
+            console.log('Checking waiter:', waiter);
+
+            if (waiter.isAvailable && waiter.fcmToken) {
+                assignedWaiter = waiter;
+                break;
+            }
+        }
+
+        if (assignedWaiter) {
+            // Son atanan garson indexini güncelle
+            await setDoc(restaurantRef, {
+                lastAssignedWaiterIndex: nextIndex
+            }, { merge: true });
+
+            console.log('Assigned waiter:', assignedWaiter);
+            return assignedWaiter;
+        }
+
+        console.log('No available waiter found');
+        return null;
+    } catch (error) {
+        console.error("Error assigning waiter:", error);
+        return null;
+    }
+};
+export { getDocs, getDoc, getFood, setFood, getTableList, getRestaurantList, getRestaurantName, setOrder, getOrder, assignWaiter }

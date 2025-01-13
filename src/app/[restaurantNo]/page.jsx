@@ -5,8 +5,8 @@ import Title from "@/components/UI/Title";
 import Link from "next/link";
 import Loader from "@/components/loader";
 
-const page = ({ params: restaurantNo }) => {
-  const [tableList, setTableList] = useState([]);
+const Page = ({ params: { restaurantNo } }) => {
+  const [tables, setTables] = useState([]);
   const [loading, setLoading] = useState(true)
   useEffect(() => {
     getAllTableList();
@@ -15,18 +15,18 @@ const page = ({ params: restaurantNo }) => {
   const getAllTableList = async () => {
     const data = await getTableList(restaurantNo.restaurantNo);
     console.log(data);
-    setTableList(data);
+    setTables(data);
     setLoading(false)
   };
   const emptyTable = "font-bold text-lime-500";
   const busyTable = "font-bold text-red-500";
-  console.log(tableList);
+  console.log(tables);
   return (
     <div className="bg-black flex-1 text-white px-4">
-      <Title content="Masa Listesi" />
+      {/* <Title content="Masa Listesi" /> 
       <div className="flex flex-wrap gap-3 flex-1 ">
         {loading ? <Loader /> : (
-          tableList.map((table) => {
+          tables.map((table) => {
             return (
               <Link
                 href={{
@@ -43,9 +43,9 @@ const page = ({ params: restaurantNo }) => {
             );
           })
         )}
-      </div>
+      </div> */}
     </div>
   );
 };
 
-export default page;
+export default Page;

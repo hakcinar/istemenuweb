@@ -1,13 +1,19 @@
 "use client";
 import { getDocs, getDoc } from "@/utils/firestore";
+import { getOrder } from "@/utils/firestore";
 import { useEffect, useState } from "react";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Category from "@/components/category";
 import Title from "@/components/UI/Title";
 import Loader from "@/components/loader";
+import OrderStatus from "@/components/OrderStatus";
 
-export default function page({ params: { restaurantNo, tableNo } }) {
+const Page = ({ params: { restaurantNo, tableNo } }) => {
+  const [categories, setCategories] = useState([]);
+  const [filter, setFilter] = useState("");
+  const [loading, setLoading] = useState(true)
+  const [order, setOrder] = useState({});
   const searchIcon = (
     <FontAwesomeIcon
       className="text-black absolute top-[18px] font-thin left-10 text-xl"
@@ -16,20 +22,23 @@ export default function page({ params: { restaurantNo, tableNo } }) {
   );
   useEffect(() => {
     getCategories();
+    getFullOrder();
   }, []);
   const setRestaurantAndTable = (restaurantNo, tableNo) => {
     window.dispatchEvent(new Event('restaurantChanged'));
     localStorage.setItem('restaurantNo', restaurantNo);
     localStorage.setItem('tableNo', tableNo);
   }
-  const [categories, setCategories] = useState([]);
-  const [filter, setFilter] = useState("");
-  const [loading, setLoading] = useState(true)
+
   const filteredCategories = categories.filter((category) => {
     return category.name
       .toLocaleLowerCase()
       .includes(filter.toLocaleLowerCase());
   });
+  const getFullOrder = async () => {
+    const order = await getOrder(restaurantNo, tableNo);
+    setOrder(order);
+  }
   const getCategories = async () => {
     const data = await getDocs("", restaurantNo);
     setCategories(data);
@@ -41,19 +50,20 @@ export default function page({ params: { restaurantNo, tableNo } }) {
   setRestaurantAndTable(restaurantNo, tableNo);
   return (
     loading ? <Loader /> : (
-      <div className="w-full flex flex-col pt-3 flex-1 items-center bg-black ">
-        <div className="w-full px-6 relative">
+      <div className="w-full flex flex-col px-4 pt-3 flex-1 items-center bg-black ">
+        {order && <OrderStatus tableNo={tableNo} status={order.status} />}
+        <div className="w-full ">
           <input
             value={filter}
             onChange={filterHandler}
-            className="px-14 w-full fw-bold rounded-md relative py-4 mb-4"
+            className="px-4 w-full fw-bold rounded-md relative py-4 mb-4"
             type="text"
-            placeholder="Arama Yap..."
+            placeholder="Kategori Ara"
           />
-          {searchIcon}
           <Title content="Kategoriler" />
+          {/* {searchIcon} */}
         </div>
-        <ul className="grid w-full px-3 gap-6 grid-cols-2">
+        <ul className="grid w-full gap-6 grid-cols-2">
           {!filter &&
             categories.map((item) => {
               return (
@@ -75,7 +85,7 @@ export default function page({ params: { restaurantNo, tableNo } }) {
                   name={item.name}
                   key={item.id}
                   href={{
-                    pathname: `/${restaurantNo}/${tableNo}/menu/${item.id}`,
+                    pathname: `/${restaurantNo}/${tableNo}/${item.id}`,
                   }}
                 />
               );
@@ -85,3 +95,5 @@ export default function page({ params: { restaurantNo, tableNo } }) {
     )
   );
 }
+
+export default Page;

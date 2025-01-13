@@ -1,15 +1,16 @@
 "use client"
 import BasketFood from "@/components/BasketFood";
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { faCartShopping, faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { setOrder } from "@/utils/firestore";
 import { toast, ToastContainer } from "react-toastify";
 
 
-const page = ({ params: { restaurantNo, tableNo } }) => {
-    const [loading, setLoading] = useState(false);
+const Page = ({ params: { restaurantNo, tableNo } }) => {
+    const [orderLoading, setOrderLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
     const basketIcon = (
         <FontAwesomeIcon className="font-bold" icon={faCartShopping} />
     );
@@ -20,8 +21,12 @@ const page = ({ params: { restaurantNo, tableNo } }) => {
         />
     );
     console.log(restaurantNo, tableNo);
-    const localBasket = JSON.parse(localStorage.getItem("basket"));
-    const [basket, setBasket] = useState(localBasket);
+    useEffect(() => {
+        const localBasket = JSON.parse(localStorage.getItem("basket"));
+        setBasket(localBasket);
+        setLoading(false);
+    }, []);
+    const [basket, setBasket] = useState([]);
     const total = basket.reduce((acc, item) => acc + item.cost * item.quantity, 0);
     const onPlus = (id) => {
         const newBasket = basket.map((item) => item.id === id ? { ...item, quantity: item.quantity + 1 } : item);
@@ -47,7 +52,7 @@ const page = ({ params: { restaurantNo, tableNo } }) => {
         localStorage.setItem("basket", JSON.stringify(newBasket));
     }
     const handleOrder = async () => {
-        setLoading(true);
+        setOrderLoading(true);
         const order = {
             basket: basket,
             total: total,
@@ -61,7 +66,7 @@ const page = ({ params: { restaurantNo, tableNo } }) => {
                 fontWeight: "bold"
             },
         });
-        setLoading(false);
+        setOrderLoading(false);
         setBasket([]);
         localStorage.setItem("basket", JSON.stringify([]));
     }
@@ -93,8 +98,8 @@ const page = ({ params: { restaurantNo, tableNo } }) => {
                         <h2 className="text-lg text-yellow  font-bold">Toplam</h2>
                         <p className="text-2xl text-yellow font-bold">₺{total.toFixed(2)}</p>
                     </div>
-                    <button onClick={handleOrder} disabled={loading} className="text-black font-bold flex justify-between items-center text-bold bg-yellow border-2 font-bold rounded-xl text-xl border-yellow outline-none px-4 py-2 w-full mt-4"
-                    >{loading ? "Sipariş Veriliyor..." : "Sipariş Ver "} {loading ? spinner : basketIcon}</button>
+                    <button onClick={handleOrder} disabled={orderLoading} className="text-black font-bold flex justify-between items-center text-bold bg-yellow border-2 font-bold rounded-xl text-xl border-yellow outline-none px-4 py-2 w-full mt-4"
+                    >{orderLoading ? "Sipariş Veriliyor..." : "Sipariş Ver "} {orderLoading ? spinner : basketIcon}</button>
                 </>
             )}
             <ToastContainer
@@ -113,4 +118,4 @@ const page = ({ params: { restaurantNo, tableNo } }) => {
     );
 };
 
-export default page;
+export default Page;

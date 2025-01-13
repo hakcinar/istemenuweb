@@ -1,5 +1,5 @@
 // Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
+import { initializeApp, getApps } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 
 // TODO: Add SDKs for Firebase products that you want to use
@@ -18,7 +18,11 @@ const firebaseConfig = {
     measurementId: "G-2B7YK4NRCX"
 };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-export default app
+let app;
+
+// Server-side ve client-side için güvenli başlatma
+if (!getApps().length) {
+  app = initializeApp(firebaseConfig);
+}
+
+export default app;

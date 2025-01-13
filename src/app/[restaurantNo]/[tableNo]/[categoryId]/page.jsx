@@ -5,8 +5,8 @@ import Title from "@/components/UI/Title";
 import Food from "@/components/Food";
 import Loader from "@/components/loader";
 
-const page = ({ params: { restaurantNo, tableNo, categoryId } }) => {
-  const [foodList, setFoodList] = useState([]);
+const Page = ({ params: { categoryId, restaurantNo } }) => {
+  const [foods, setFoods] = useState([]);
   const [category, setCategory] = useState({});
   const [loading, setLoading] = useState(true)
   useEffect(() => {
@@ -16,20 +16,20 @@ const page = ({ params: { restaurantNo, tableNo, categoryId } }) => {
     const categoryData = await getDoc(categoryId, restaurantNo);
     setCategory(categoryData);
     const res = await getDocs(`${categoryId}/foodList`, restaurantNo);
-    setFoodList(res);
+    setFoods(res);
     setLoading(false)
   };
   return (
     loading ? <Loader /> : (
       <div className="text-white flex flex-col flex-1 bg-black">
         <img
-          className="w-full h-72 mb-6 object-cover"
+          className="w-full h-64 mb-6 object-cover"
           src={`data:image/jpeg;base64,${category.image}`}
         />
         <div className="px-4">
           <Title content={category.name} />
           <ul>
-            {foodList.map((food) => {
+            {foods.map((food) => {
               return (
                 <Food
                   href={{
@@ -51,4 +51,4 @@ const page = ({ params: { restaurantNo, tableNo, categoryId } }) => {
   );
 };
 
-export default page;
+export default Page;

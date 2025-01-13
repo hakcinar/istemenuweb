@@ -26,7 +26,7 @@ const Navbar = () => {
   }, [pathname]);
 
   return (
-    <nav className="bg-black sticky bottom-0 px-4 pt-3 w-full">
+    <nav className="bg-black sticky bottom-0 px-4  py-3 w-full">
       <div className="container flex justify-between items-center">
         <NavLink
           href={`${navigationPath}` || '/'}

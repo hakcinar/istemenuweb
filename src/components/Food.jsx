@@ -1,27 +1,35 @@
-import React from "react";
+import { motion } from "framer-motion";
 import Link from "next/link";
 
 const Food = ({ alt, name, src, price, href, preparationTime }) => {
   return (
-    <Link
-      href={href}
-      className="w-full bg-gray py-4 flex px-4 mb-2 rounded-xl"
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      whileHover={{ scale: 1.02 }}
+      transition={{ duration: 0.3 }}
     >
-      <img
-        className="object-cover w-[75px] h-[75px] rounded-xl"
-        alt={alt}
-        src={src}
-      />
-      <div className="flex flex-col px-4 ">
-        <h5 className="text-white text-sm font-bold mb-2">{name}</h5>
-        <span className="text-white text-sm mb-2"> <span className="font-bold">Fiyat: </span>{price}₺</span>
-        <div>
-          <span className="text-white text-sm">
+      <Link
+        href={href}
+        className="w-full bg-gray py-4 flex px-4 mb-2 rounded-xl"
+      >
+        <motion.img
+          whileHover={{ scale: 1.05 }}
+          className="object-cover w-1/4 aspect-square rounded-xl"
+          alt={alt}
+          src={src}
+        />
+        <div className="flex flex-col px-4">
+          <h5 className="text-white text-sm font-bold mb-2">{name}</h5>
+          <span className="text-white text-sm mb-2"><span className="font-bold">Fiyat: </span>{price}₺</span>
+          <div>
+            <span className="text-white text-sm">
               <span className="font-bold">Hazırlanma Süresi: </span>{preparationTime}
-          </span>
+            </span>
+          </div>
         </div>
-      </div>
-    </Link>
+      </Link>
+    </motion.div>
   );
 };
 

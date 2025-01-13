@@ -3,27 +3,27 @@ import { PlusCircleIcon, MinusCircleIcon, TrashIcon } from "@heroicons/react/24/
 
 const BasketFood = ({ src, alt, name, price, quantity, onPlus, onMinus, onDelete }) => {
 
-    return <div className="w-full bg-gray py-4 flex px-4 mb-2 items-start rounded-xl">
-        <img src={src} alt={alt} className="object-cover w-[75px] h-[75px] rounded-xl" />
-        <div className="flex flex-col w-full ml-4">
+    return <div className="w-full bg-gray p-4 flex mb-2 items-start rounded-xl">
+        <img src={src} alt={alt} className="object-cover w-1/4 aspect-square rounded-xl" />
+        <div className="flex flex-col w-full px-4 mb-4">
             <div className="flex flex-col">
                 <h5 className="text-white text-sm font-bold mb-1">{name}</h5>
                 <span className="text-white text-sm mb-1">
-                    <span className="font-bold">Fiyat: </span>{price}₺
+                    <span className="font-bold">Fiyat: </span>{price} ₺
                 </span>
 
             </div>
-            <div className="flex w-full">
-                <h5 className="font-bold text-sm w-full mb-1">{quantity} Adet </h5>
-                <div className="flex w-full justify-end items-center gap-2">
+            <div className="flex w-full justify-start ">
+                <div className="flex w-full justify-start items-center gap-2 mt-2 ml-[-4px] ">
                     <button onClick={onPlus} className="text-yellow flex justify-center items-center text-xl">
-                        <PlusCircleIcon className="h-5 w-5" />
+                        <PlusCircleIcon className="w-6 aspect-square" />
                     </button>
-                    <button onClick={onMinus} className="text-yellow flex justify-center items-center text-xl">
-                        <MinusCircleIcon className="h-5 w-5" />
+                    <span className="text-yellow text-sm font-bold">{quantity} Adet</span>
+                    <button onClick={onMinus} classNam e="text-yellow flex justify-center items-center text-xl">
+                        <MinusCircleIcon className="w-6 text-yellow aspect-square" />
                     </button>
                     <button onClick={onDelete} className="text-yellow flex justify-center items-center text-xl">
-                        <TrashIcon className="h-5 w-5" />
+                        <TrashIcon className="w-6 aspect-square" />
                     </button>
                 </div>
             </div>
