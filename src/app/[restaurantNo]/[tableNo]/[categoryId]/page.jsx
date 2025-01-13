@@ -5,7 +5,7 @@ import Title from "@/components/UI/Title";
 import Food from "@/components/Food";
 import Loader from "@/components/loader";
 
-const Page = ({ params: { categoryId, restaurantNo } }) => {
+const Page = ({ params: { categoryId, restaurantNo, tableNo } }) => {
   const [foods, setFoods] = useState([]);
   const [category, setCategory] = useState({});
   const [loading, setLoading] = useState(true)
@@ -25,6 +25,7 @@ const Page = ({ params: { categoryId, restaurantNo } }) => {
         <img
           className="w-full h-64 mb-6 object-cover"
           src={`data:image/jpeg;base64,${category.image}`}
+          alt={category.name}
         />
         <div className="px-4">
           <Title content={category.name} />
@@ -41,7 +42,7 @@ const Page = ({ params: { categoryId, restaurantNo } }) => {
                   price={food.cost}
                   key={food.id}
                   preparationTime={food.preparationTime}
-                ></Food>
+                />
               );
             })}
           </ul>
