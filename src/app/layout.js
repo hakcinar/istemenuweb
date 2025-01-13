@@ -9,7 +9,7 @@ const poppins = Poppins({
   display: 'swap',
 })
 
-export default function RootLayout({ children }) {
+export default function Layout({ children }) {
   return (
     <html lang="en" className={poppins.className}>
       <body className="h-[100dvh] flex">

@@ -135,4 +135,15 @@ export const getWaiterList = async (restaurantNo) => {
         return null;
     }
 };
-export { getDocs, getDoc, getFood, setFood, getTableList, getRestaurantList, getRestaurantName, setOrder, getOrder, assignWaiter }
+export { 
+  getDocs, 
+  getDoc, 
+  getFood, 
+  setFood, 
+  getTableList, 
+  getRestaurantList, 
+  getRestaurantName, 
+  setOrder, 
+  getOrder, 
+  assignWaiter 
+};

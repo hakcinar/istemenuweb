@@ -4,7 +4,7 @@ import { getOrder } from "@/utils/firestore";
 import { useEffect, useState } from "react";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Category from "@/components/category";
+import Category from "@/components/Category";
 import Title from "@/components/UI/Title";
 import Loader from "@/components/loader";
 import OrderStatus from "@/components/OrderStatus";
