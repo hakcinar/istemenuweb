@@ -2,13 +2,6 @@
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { getRestaurantName } from "@/utils/firestore";
-import { Poppins } from 'next/font/google';
-
-const poppins = Poppins({
-  weight: ['400', '500', '600', '700'],
-  subsets: ['latin'],
-  display: 'swap',
-});
 
 export default function Header() {
   const [title, setTitle] = useState("");
@@ -35,9 +28,9 @@ export default function Header() {
   }, [pathname]);
 
   return (
-    <header className={`sticky top-0 z-50 bg-black ${poppins.className}`}>
+    <header className="sticky top-0 z-50 bg-black">
       <div className="flex justify-between items-center px-4 py-4">
-        <h1 className="text-yellow text-3xl font-extrabold">İste</h1>
+        <h1 className="text-yellow text-3xl font-extrabold">iste</h1>
         <h1 className="text-yellow text-lg font-bold">{title}</h1>
       </div>
     </header>
