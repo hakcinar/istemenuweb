@@ -90,7 +90,7 @@ const Page = ({ params: { restaurantNo, tableNo } }) => {
         }
     }
     return (
-        <div className="text-white flex flex-1 flex-col px-4">
+        <div className="text-white flex flex-1 relative bg-black flex-col px-4">
             <h1 className="text-white text-2xl mt-4 font-bold mb-2">Sepetim</h1>
             {loading ? (
                 <div>Yükleniyor...</div>
@@ -122,7 +122,7 @@ const Page = ({ params: { restaurantNo, tableNo } }) => {
                     )}
 
                     {Array.isArray(basket) && basket.length > 0 && (
-                        <>
+                        <div className="sticky flex-1 bottom-20">
                             <div className="flex justify-between items-center mt-4">
                                 <h2 className="text-lg text-yellow font-bold">Toplam</h2>
                                 <p className="text-2xl text-yellow font-bold">₺{total.toFixed(2)}</p>
@@ -135,7 +135,7 @@ const Page = ({ params: { restaurantNo, tableNo } }) => {
                                 {orderLoading ? "Sipariş Veriliyor..." : "Sipariş Ver"}{" "}
                                 {orderLoading ? spinner : basketIcon}
                             </button>
-                        </>
+                        </div>
                     )}
                 </>
             )}

@@ -15,12 +15,12 @@ const Food = ({ alt, name, src, price, href, preparationTime }) => {
       >
         <motion.img
           whileHover={{ scale: 1.05 }}
-          className="object-cover w-1/4 aspect-square rounded-xl"
+          className="object-cover w-2/5 aspect-square rounded-xl"
           alt={alt}
           src={src}
         />
         <div className="flex flex-col px-4">
-          <h5 className="text-white text-sm font-bold mb-2">{name}</h5>
+          <h5 className="text-yellow text-sm font-bold mb-2">{name}</h5>
           <span className="text-white text-sm mb-2"><span className="font-bold">Fiyat: </span>{price}₺</span>
           <div>
             <span className="text-white text-sm">

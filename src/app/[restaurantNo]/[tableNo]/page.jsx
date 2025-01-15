@@ -60,8 +60,11 @@ const Page = ({ params: { restaurantNo, tableNo } }) => {
             type="text"
             placeholder="Kategori Ara"
           />
-          <Title content="Kategoriler" />
-          {/* {searchIcon} */}
+          <div className="flex justify-between items-center">
+            <Title content="Kategoriler" />
+            <Title content={`Masa ${tableNo}`} className="text-white"></Title>
+            {/* {searchIcon} */}
+          </div>
         </div>
         <ul className="grid w-full gap-6 grid-cols-2">
           {!filter &&
