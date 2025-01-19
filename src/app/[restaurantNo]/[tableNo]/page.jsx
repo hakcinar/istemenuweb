@@ -51,7 +51,7 @@ const Page = ({ params: { restaurantNo, tableNo } }) => {
   return (
     loading ? <Loader /> : (
       <div className="w-full flex flex-col px-4 pt-3 flex-1 items-center bg-black ">
-        {order && <OrderStatus tableNo={tableNo} status={order.status} />}
+        {order && <OrderStatus tableNo={tableNo} href={`${tableNo}/order`} status={order.status} />}
         <div className="w-full ">
           <input
             value={filter}

@@ -19,10 +19,10 @@ const Page = ({ params: { restaurantNo, tableNo } }) => {
     }
 
     return (
-        <div className="text-white flex-1 px-4 flex flex-col">
-            <OrderStatus />
+        <div className="text-white flex-1 px-4 flex bg-black flex-col">
+            <OrderStatus status={order?.status} href={`/${restaurantNo}/${tableNo}`} />
             <h1 className="text-2xl font-bold mb-4">Siparişim</h1>
-            <div className="flex flex-col gap-4 text-white overflow-y-auto flex-1">
+            <div className="flex flex-col gap-4 text-white  flex-1">
                 {orderFoodList.map((item) => (
                     <Food
                         alt={item.name}

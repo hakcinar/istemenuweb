@@ -1,7 +1,7 @@
 import React from 'react'
 import ProgressBar from "@ramonak/react-progress-bar";
 import Link from 'next/link';
-const OrderStatus = ({ status, tableNo }) => {
+const OrderStatus = ({ status,href }) => {
   // Status can be: "Sipariş Alındı", "Hazırlanıyor", "Teslim Edildi"
   const getStatusIndex = () => {
     switch (status) {
@@ -17,12 +17,10 @@ const OrderStatus = ({ status, tableNo }) => {
   };
 
   return (
-    <div className="w-full mb-4 rounded-xl bg-gray p-4">
+    <Link href={href} className="w-full mb-4 rounded-xl bg-gray p-4">
       <div className="flex justify-between items-center mb-16">
         <h1 className="text-white text-center text-xl font-bold">Sipariş Alındı</h1>
-        <Link href={`${tableNo}/order`}>
-          <h1 className="text-yellow text-center text-lg font-bold">Sipariş Durumu</h1>
-        </Link>
+        <h1 className="text-yellow text-center text-lg font-bold">Sipariş Durumu</h1>
       </div>
       {/* Progress Bar Container */}
       <div className="relative">
@@ -58,7 +56,7 @@ const OrderStatus = ({ status, tableNo }) => {
           </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 
