@@ -1,5 +1,5 @@
 "use client";
-import { getDocs, getDoc } from "@/utils/firestore";
+import { getDocs } from "@/utils/firestore";
 import { getOrder } from "@/utils/firestore";
 import { useEffect, useState } from "react";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";

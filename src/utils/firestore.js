@@ -47,21 +47,27 @@ const getRestaurantName = async (restaurantName) => {
     console.log(item.data())
     return item.data()
 }
-const setOrder = async (orderData, restaurantNo, tableNo) => {
+const setOrder = async (orderData, restaurantNo, tableNo, waiter) => {
   try {
-    const orderRef = doc(db, `database/dev/restaurants/${restaurantNo}/orders/${tableNo}`)
+    const orderRef = doc(db, `database/dev/restaurants/${restaurantNo}/waiters/${waiter.mail}/orders/${orderData.id}`);
     await setDoc(orderRef, {
+      id: orderData.id,
       orders: orderData,
       tableNo: tableNo,
       timestamp: new Date(),
-      status: "preparing"
-    })
-    return true
+      status: "preparing",
+      waiter: {
+        id: waiter.id,
+        name: waiter.name,
+        mail: waiter.mail
+      }
+    });
+    return true;
   } catch (error) {
-    console.error("Error adding order: ", error)
-    return false
+    console.error("Error adding order: ", error);
+    return false;
   }
-}
+};
 const getOrder = async (restaurantNo, tableNo) => {
     const order = await firebaseGetDoc(doc(db, `database/dev/restaurants/${restaurantNo}/orders/${tableNo}`))
     return order.data()

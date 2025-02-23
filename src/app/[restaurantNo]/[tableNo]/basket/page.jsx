@@ -7,7 +7,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { setOrder } from "@/utils/firestore";
 import { toast, ToastContainer } from "react-toastify";
 import { motion, AnimatePresence } from "framer-motion";
-
 const Page = ({ params: { restaurantNo, tableNo } }) => {
     const [orderLoading, setOrderLoading] = useState(false);
     const [loading, setLoading] = useState(true);
@@ -70,10 +69,38 @@ const Page = ({ params: { restaurantNo, tableNo } }) => {
         setOrderLoading(true);
         try {
             const order = {
+                id: Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15),
                 basket: basket,
                 total: total,
+            };
+
+            // Önce garson ata
+            const waiterResponse = await fetch('/api/notification', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    restaurantNo,
+                    tableNo,
+                    type: 'order',
+                    orderDetails: order
+                })
+            });
+
+            const waiterData = await waiterResponse.json();
+
+            if (!waiterResponse.ok || !waiterData.success) {
+                throw new Error(waiterData.message || 'Garson atanamadı');
             }
-            await setOrder(order, restaurantNo, tableNo);
+
+            // Siparişi garson bilgisiyle kaydet
+            const orderResult = await setOrder(order, restaurantNo, tableNo, waiterData.waiter);
+            
+            if (!orderResult) {
+                throw new Error('Sipariş kaydedilemedi');
+            }
+
             toast.success("Siparişiniz alındı", {
                 style: {
                     background: "#FEFE00",
@@ -81,15 +108,16 @@ const Page = ({ params: { restaurantNo, tableNo } }) => {
                     fontWeight: "bold"
                 },
             });
+            
             setBasket([]);
             localStorage.setItem("basket", JSON.stringify([]));
         } catch (error) {
             console.error("Order error:", error);
-            toast.error("Sipariş oluşturulurken bir hata oluştu");
+            toast.error(error.message || "Sipariş oluşturulurken bir hata oluştu");
         } finally {
             setOrderLoading(false);
         }
-    }
+    };
     return (
         <>
             <div className="text-white flex flex-1 relative bg-black flex-col px-4">
