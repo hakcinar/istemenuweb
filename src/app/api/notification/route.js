@@ -3,7 +3,23 @@ import { assignWaiter } from '@/utils/firestore';
 export async function POST(request) {
   try {
     const body = await request.json();
-    const waiter = await assignWaiter(body.restaurantNo);
+    const waiter = await assignWaiter(body.restaurantNo, body.tableNo);
+    
+    // Waiter null olduğunda daha erken hata fırlatmalıyız
+    if (!waiter) {
+      return Response.json({
+        success: false,
+        message: 'No available waiter found'
+      }, { status: 404 });
+    }
+
+    if (!waiter.fcmToken) {
+      return Response.json({
+        success: false,
+        message: 'Selected waiter has no FCM token'
+      }, { status: 400 });
+    }
+
     console.log(waiter);
     // Sadece atanan garsonu logla
     console.log('Assigned Waiter:', {
@@ -12,10 +28,6 @@ export async function POST(request) {
       isAvailable: waiter?.isAvailable,
       fcmToken: waiter?.fcmToken ? 'exists' : 'missing'
     });
-
-    if (!waiter || !waiter.fcmToken) {
-      throw new Error('No available waiter found');
-    }
 
     let notificationData = {
       token: waiter.fcmToken,

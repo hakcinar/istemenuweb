@@ -69,9 +69,32 @@ const setOrder = async (orderData, restaurantNo, tableNo, waiter) => {
   }
 };
 const getOrder = async (restaurantNo, tableNo) => {
-    const order = await firebaseGetDoc(doc(db, `database/dev/restaurants/${restaurantNo}/orders/${tableNo}`))
-    return order.data()
-}
+    try {
+        // Önce garsonları kontrol et
+        const waiters = await firebaseGetDocs(collection(db, `database/dev/restaurants/${restaurantNo}/waiters`));
+        
+        // Her garsonun orders koleksiyonunu kontrol et
+        for (const waiterDoc of waiters.docs) {
+            const orderRef = collection(db, `database/dev/restaurants/${restaurantNo}/waiters/${waiterDoc.id}/orders`);
+            const orders = await firebaseGetDocs(orderRef);
+            
+            // Bu masaya ait siparişi bul
+            const tableOrder = orders.docs.find(order => {
+                const data = order.data();
+                return data.tableNo === tableNo;
+            });
+
+            if (tableOrder) {
+                return tableOrder.data();
+            }
+        }
+        
+        return null;
+    } catch (error) {
+        console.error("Error getting order:", error);
+        return null;
+    }
+};
 export const getWaiterList = async (restaurantNo) => {
     try {
         const waiters = await firebaseGetDocs(collection(db, `database/dev/restaurants/${restaurantNo}/waiters`));
@@ -91,32 +114,45 @@ export const getWaiterList = async (restaurantNo) => {
         return [];
     }
 };
- const assignWaiter = async (restaurantNo) => {
+const assignWaiter = async (restaurantNo, tableNo) => {
     try {
-        // Son atanan garson indexini al
-        const restaurantRef = doc(db, `database/dev/restaurants/${restaurantNo}`);
-        const restaurantDoc = await firebaseGetDoc(restaurantRef);
-        let lastAssignedIndex = restaurantDoc.data()?.lastAssignedWaiterIndex ?? -1;
-        console.log('Last assigned index:', lastAssignedIndex);
+        // Önce mevcut siparişi kontrol et
+        const existingOrder = await getOrder(restaurantNo, tableNo);
+        if (existingOrder?.waiter) {
+            // Mevcut garsonun bilgilerini al
+            const existingWaiterDoc = await firebaseGetDoc(
+                doc(db, `database/dev/restaurants/${restaurantNo}/waiters/${existingOrder.waiter.mail}`)
+            );
+            
+            if (existingWaiterDoc.exists()) {
+                const existingWaiter = existingWaiterDoc.data();
+                return {
+                    id: existingOrder.waiter.id,
+                    name: existingOrder.waiter.name,
+                    mail: existingOrder.waiter.mail,
+                    fcmToken: existingWaiter.fcmToken,
+                    isAvailable: existingWaiter.isAvailable
+                };
+            }
+        }
 
-        // Garson listesini al
+        // Mevcut sipariş yoksa yeni garson ata
         const waiters = await getWaiterList(restaurantNo);
-        console.log('Retrieved waiters:', waiters);
-
         if (!waiters.length) {
-            console.log('No waiters found');
             return null;
         }
 
-        const totalWaiters = waiters.length;
+        // Garson atama mantığı...
+        const restaurantRef = doc(db, `database/dev/restaurants/${restaurantNo}`);
+        const restaurantDoc = await firebaseGetDoc(restaurantRef);
+        let lastAssignedIndex = restaurantDoc.data()?.lastAssignedWaiterIndex ?? -1;
+
         let nextIndex = lastAssignedIndex;
         let assignedWaiter = null;
 
-        // Round-robin dağıtım
-        for (let i = 0; i < totalWaiters; i++) {
-            nextIndex = (nextIndex + 1) % totalWaiters;
+        for (let i = 0; i < waiters.length; i++) {
+            nextIndex = (nextIndex + 1) % waiters.length;
             const waiter = waiters[nextIndex];
-            console.log('Checking waiter:', waiter);
 
             if (waiter.isAvailable && waiter.fcmToken) {
                 assignedWaiter = waiter;
@@ -125,16 +161,13 @@ export const getWaiterList = async (restaurantNo) => {
         }
 
         if (assignedWaiter) {
-            // Son atanan garson indexini güncelle
             await setDoc(restaurantRef, {
                 lastAssignedWaiterIndex: nextIndex
             }, { merge: true });
 
-            console.log('Assigned waiter:', assignedWaiter);
             return assignedWaiter;
         }
 
-        console.log('No available waiter found');
         return null;
     } catch (error) {
         console.error("Error assigning waiter:", error);

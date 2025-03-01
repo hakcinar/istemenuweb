@@ -88,9 +88,15 @@ const Page = ({ params: { restaurantNo, tableNo } }) => {
                 })
             });
 
+            // Response'u daha detaylı kontrol edelim
+            if (!waiterResponse.ok) {
+                const errorData = await waiterResponse.json();
+                throw new Error(errorData.message || 'Notification failed');
+            }
+
             const waiterData = await waiterResponse.json();
 
-            if (!waiterResponse.ok || !waiterData.success) {
+            if (!waiterData.success) {
                 throw new Error(waiterData.message || 'Garson atanamadı');
             }
 
