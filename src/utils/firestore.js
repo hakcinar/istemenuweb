@@ -110,7 +110,6 @@ const getOrder = async (restaurantNo, tableNo) => {
         `database/dev/restaurants/${restaurantNo}/waiters/${waiterDoc.id}/orders`
       );
       const orders = await firebaseGetDocs(orderRef);
-
       // Bu masaya ait siparişi bul
       const tableOrder = orders.docs.find((order) => {
         const data = order.data();

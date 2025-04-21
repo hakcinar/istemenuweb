@@ -132,6 +132,38 @@ const Page = ({ params: { restaurantNo, tableNo } }) => {
     <>
       <div className="text-white flex flex-1 flex-grow-1 relative bg-black flex-col px-4">
         <h1 className="text-white text-2xl mt-4 font-bold mb-2">Sepetim</h1>
+        {Array.isArray(basket) && basket.length > 0 && (
+          <div className="bg-black mb-4 sticky">
+            <div className="bg-gray px-4 pb-4 pt-2 rounded-xl">
+              <div className="flex justify-between items-center mt-4">
+                <h2 className="text-lg text-yellow font-bold">Toplam</h2>
+                <motion.p
+                  key={total}
+                  initial={{ scale: 1.2, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 300,
+                    damping: 15,
+                  }}
+                  className="text-2xl text-yellow font-bold"
+                >
+                  ₺{total.toFixed(2)}
+                </motion.p>
+              </div>
+              <motion.button
+                whileTap={{ scale: 0.95 }}
+                whileHover={{ scale: 1.02 }}
+                onClick={handleOrder}
+                disabled={orderLoading}
+                className="text-black font-bold flex justify-between items-center text-bold bg-yellow border-2 font-bold rounded-xl text-xl border-yellow outline-none px-4 py-2 w-full mt-4 disabled:opacity-50"
+              >
+                {orderLoading ? "Sipariş Veriliyor..." : "Sipariş Ver"}{" "}
+                {orderLoading ? spinner : basketIcon}
+              </motion.button>
+            </div>
+          </div>
+        )}
         {loading ? (
           <div>Yükleniyor...</div>
         ) : (
@@ -175,38 +207,6 @@ const Page = ({ params: { restaurantNo, tableNo } }) => {
           }}
         />
       </div>
-      {Array.isArray(basket) && basket.length > 0 && (
-        <div className="px-4 bg-black sticky bottom-19">
-          <div className="bg-gray px-4 pb-4 pt-2 rounded-xl">
-            <div className="flex justify-between items-center mt-4">
-              <h2 className="text-lg text-yellow font-bold">Toplam</h2>
-              <motion.p
-                key={total}
-                initial={{ scale: 1.2, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{
-                  type: "spring",
-                  stiffness: 300,
-                  damping: 15,
-                }}
-                className="text-2xl text-yellow font-bold"
-              >
-                ₺{total.toFixed(2)}
-              </motion.p>
-            </div>
-            <motion.button
-              whileTap={{ scale: 0.95 }}
-              whileHover={{ scale: 1.02 }}
-              onClick={handleOrder}
-              disabled={orderLoading}
-              className="text-black font-bold flex justify-between items-center text-bold bg-yellow border-2 font-bold rounded-xl text-xl border-yellow outline-none px-4 py-2 w-full mt-4 disabled:opacity-50"
-            >
-              {orderLoading ? "Sipariş Veriliyor..." : "Sipariş Ver"}{" "}
-              {orderLoading ? spinner : basketIcon}
-            </motion.button>
-          </div>
-        </div>
-      )}
     </>
   );
 };
