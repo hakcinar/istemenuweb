@@ -20,7 +20,6 @@ const Page = ({ params: { restaurantNo, tableNo } }) => {
             icon={faSpinner}
         />
     );
-    console.log(restaurantNo, tableNo);
     useEffect(() => {
         try {
             const localBasket = localStorage.getItem("basket");
@@ -126,7 +125,7 @@ const Page = ({ params: { restaurantNo, tableNo } }) => {
     };
     return (
         <>
-            <div className="text-white flex flex-1 relative bg-black flex-col px-4">
+            <div className="text-white flex flex-1 flex-grow-1 relative bg-black flex-col px-4">
                 <h1 className="text-white text-2xl mt-4 font-bold mb-2">Sepetim</h1>
                 {loading ? (
                     <div>Yükleniyor...</div>

@@ -66,7 +66,6 @@ const Page = ({ params: { foodId, categoryId, restaurantNo } }) => {
     // Update both state and localStorage
     setBasket(newBasket);
     localStorage.setItem('basket', JSON.stringify(newBasket));
-    console.log(newBasket);
     // Dispatch event for other components
     window.dispatchEvent(new Event('basketUpdated'));
     setNote("");

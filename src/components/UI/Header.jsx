@@ -1,9 +1,9 @@
 "use client";
-import { usePathname } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 import { getRestaurantName } from "@/utils/firestore";
-import Link from 'next/link';
-import { useParams } from 'next/navigation';
+import Link from "next/link";
+import { useParams } from "next/navigation";
 export default function Header() {
   const [title, setTitle] = useState("");
   const pathname = usePathname();
@@ -11,7 +11,7 @@ export default function Header() {
   useEffect(() => {
     const updateTitle = async () => {
       try {
-        const pathParts = pathname.split('/');
+        const pathParts = pathname.split("/");
         const restaurantNo = pathParts[1];
         const tableNo = pathParts[2];
 
@@ -32,10 +32,14 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-50 bg-black">
       <div className="flex justify-between items-center px-4 py-4">
-        <h5 className="text-yellow text-xl font-bold">{title}</h5>
-        <Link href={`/${restaurantNo}/${tableNo}`} className="text-yellow text-2xl font-extrabold">iste</Link>
+        <Link
+          href={`/${restaurantNo}/${tableNo}`}
+          className="text-yellow text-lg font-bold"
+        >
+          {title}
+        </Link>
+        <h5 className="text-yellow text-xl font-bold">iste</h5>
       </div>
     </header>
   );
 }
-

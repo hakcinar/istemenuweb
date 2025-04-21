@@ -10,7 +10,7 @@ const Page = ({ params: { restaurantNo, tableNo } }) => {
 
     useEffect(() => {
         getFullOrder();
-    }, []);
+    }, [order]);
 
     const getFullOrder = async () => {
         const order = await getOrder(restaurantNo, tableNo);
