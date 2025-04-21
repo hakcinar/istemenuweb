@@ -91,7 +91,7 @@ const Page = ({ params: { restaurantNo, tableNo } }) => {
             // Response'u daha detaylı kontrol edelim
             if (!waiterResponse.ok) {
                 const errorData = await waiterResponse.json();
-                throw new Error(errorData.message || 'Notification failed');
+                throw new Error(errorData.message);
             }
 
             const waiterData = await waiterResponse.json();
@@ -126,7 +126,7 @@ const Page = ({ params: { restaurantNo, tableNo } }) => {
     };
     return (
         <>
-            <div className="text-white flex flex-1 relative bg-black flex-col px-4">
+            <div className="text-white flex grow relative bg-black flex-col px-4">
                 <h1 className="text-white text-2xl mt-4 font-bold mb-2">Sepetim</h1>
                 {loading ? (
                     <div>Yükleniyor...</div>

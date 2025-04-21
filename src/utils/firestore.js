@@ -126,6 +126,8 @@ const assignWaiter = async (restaurantNo, tableNo) => {
             
             if (existingWaiterDoc.exists()) {
                 const existingWaiter = existingWaiterDoc.data();
+                console.log('Mevcut garsonlar:', existingWaiter);
+                console.log('Seçilen garson:', existingWaiter);
                 return {
                     id: existingOrder.waiter.id,
                     name: existingOrder.waiter.name,
@@ -165,6 +167,8 @@ const assignWaiter = async (restaurantNo, tableNo) => {
                 lastAssignedWaiterIndex: nextIndex
             }, { merge: true });
 
+            console.log('Mevcut garsonlar:', waiters);
+            console.log('Seçilen garson:', assignedWaiter);
             return assignedWaiter;
         }
 

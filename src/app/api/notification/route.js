@@ -3,20 +3,31 @@ import { assignWaiter } from '@/utils/firestore';
 export async function POST(request) {
   try {
     const body = await request.json();
-    const waiter = await assignWaiter(body.restaurantNo, body.tableNo);
     
-    // Waiter null olduğunda daha erken hata fırlatmalıyız
+    // Gerekli alanları kontrol et
+    if (!body.restaurantNo || !body.tableNo) {
+      return Response.json({
+        success: false,
+        message: 'Restaurant no ve table no gerekli'
+      }, { status: 400 });
+    }
+
+    console.log('Gelen istek:', body);
+
+    const waiter = await assignWaiter(body.restaurantNo, body.tableNo);
+    console.log('Atanan garson:', waiter);
+
     if (!waiter) {
       return Response.json({
         success: false,
-        message: 'No available waiter found'
+        message: 'Uygun garson bulunamadı'
       }, { status: 404 });
     }
 
     if (!waiter.fcmToken) {
       return Response.json({
         success: false,
-        message: 'Selected waiter has no FCM token'
+        message: 'Garsonun FCM tokeni bulunamadı'
       }, { status: 400 });
     }
 
@@ -84,18 +95,11 @@ export async function POST(request) {
       notification: notificationResponse
     });
   } catch (error) {
-    return new Response(
-      JSON.stringify({
-        success: false,
-        message: error.message,
-        response: null
-      }), 
-      { 
-        status: 500,
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }
-    );
+    console.error('API Hatası:', error);
+    return Response.json({
+      success: false,
+      message: error.message || 'Bir hata oluştu',
+      error: error.stack
+    }, { status: 500 });
   }
 }

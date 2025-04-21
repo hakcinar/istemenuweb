@@ -18,7 +18,7 @@ const Category = (props) => {
           src={props.src}
         />
         <div className="flex justify-center items-center text-center">
-          <h5 className="text-white text-lg font-bold mt-2">{props.name}</h5>
+          <h5 className="text-white text-lg font-medium mt-2">{props.name}</h5>
         </div>
       </Link>
     </motion.li>

@@ -20,11 +20,11 @@ const Food = ({ alt, name, src, price, href, preparationTime }) => {
           src={src}
         />
         <div className="flex flex-col px-4">
-          <h5 className="text-yellow text-sm font-bold mb-2">{name}</h5>
-          <span className="text-white text-sm mb-2"><span className="font-bold">Fiyat: </span>{price}₺</span>
+          <h5 className="text-yellow text-sm font-medium mb-2">{name}</h5>
+          <span className="text-white text-sm mb-2"><span className="font-medium">Fiyat: </span>{price}₺</span>
           <div>
             <span className="text-white text-sm">
-              <span className="font-bold">Hazırlanma Süresi: </span>{preparationTime}
+              <span className="font-medium">Hazırlanma Süresi: </span>{preparationTime}
             </span>
           </div>
         </div>

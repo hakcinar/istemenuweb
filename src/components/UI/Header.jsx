@@ -32,8 +32,8 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-50 bg-black">
       <div className="flex justify-between items-center px-4 py-4">
-        <h5 className="text-yellow text-xl font-bold">{title}</h5>
-        <Link href={`/${restaurantNo}/${tableNo}`} className="text-yellow text-2xl font-extrabold">iste</Link>
+        <Link href={`/${restaurantNo}/${tableNo}`} className="text-yellow text-lg font-bold">{title}</Link>
+        <h5 className="text-yellow text-xl font-bold">iste</h5>
       </div>
     </header>
   );
