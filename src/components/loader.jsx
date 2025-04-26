@@ -2,7 +2,7 @@ import React from "react";
 
 const Loader = () => {
   return (
-    <div className="h-screen w-full flex flex-1 flex-col items-center justify-center bg-black">
+    <div className="h-full w-full flex flex-1 flex-col items-center justify-center bg-black">
       <div className="flex flex-col items-center">
         <h1 className="text-yellow text-3xl font-medium mb-4">iste</h1>
         <div className="flex gap-2">
