@@ -5,12 +5,11 @@ import NavBar from "@/components/NavBar";
 export default function Layout({ children }) {
   return (
     <html lang="en">
-      <body className="flex h-screen font-poppins bg-black antialiased">
-        <div className="max-w-[480px] relative w-full flex-1 flex flex-col bg-black">
-          <Header />
-          {children}
-          <NavBar />
-        </div>
+      <body className="h-screen font-poppins flex flex-col w-full max-w-[480px] bg-black antialiased">
+        <Header />
+        <div className="flex-1">{children}</div>
+
+        <NavBar />
       </body>
     </html>
   );
