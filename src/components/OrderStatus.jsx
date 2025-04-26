@@ -1,7 +1,7 @@
-import React from 'react'
+import React from "react";
 import ProgressBar from "@ramonak/react-progress-bar";
-import Link from 'next/link';
-const OrderStatus = ({ status,href }) => {
+import Link from "next/link";
+const OrderStatus = ({ status, href }) => {
   // Status can be: "Sipariş Alındı", "Hazırlanıyor", "Teslim Edildi"
   const getStatusIndex = () => {
     switch (status) {
@@ -19,8 +19,12 @@ const OrderStatus = ({ status,href }) => {
   return (
     <Link href={href} className="w-full mb-4 rounded-xl bg-gray p-4">
       <div className="flex justify-between items-center mb-16">
-        <h1 className="text-white text-center text-xl font-bold">Sipariş Alındı</h1>
-        <h1 className="text-yellow text-center text-lg font-bold">Sipariş Durumu</h1>
+        <h1 className="text-white text-center text-xl font-medium">
+          Sipariş Alındı
+        </h1>
+        <h1 className="text-yellow text-center text-lg font-medium">
+          Sipariş Durumu
+        </h1>
       </div>
       {/* Progress Bar Container */}
       <div className="relative">
@@ -35,22 +39,46 @@ const OrderStatus = ({ status,href }) => {
         {/* Status Items */}
         <div className="flex justify-between mt-[-16px]">
           <div className="flex flex-col items-start gap-1">
-            <div className={`w-5 h-5 rounded-full ${getStatusIndex() >= 33 ? 'bg-yellow border-yellow' : 'bg-white'}`} />
-            <span className={`text-sm ${getStatusIndex() >= 33 ? 'text-yellow' : 'text-white'}`}>
+            <div
+              className={`w-5 h-5 rounded-full ${
+                getStatusIndex() >= 33 ? "bg-yellow border-yellow" : "bg-white"
+              }`}
+            />
+            <span
+              className={`text-sm ${
+                getStatusIndex() >= 33 ? "text-yellow" : "text-white"
+              }`}
+            >
               Sipariş Alındı
             </span>
           </div>
 
           <div className="flex flex-col items-center gap-1">
-            <div className={`w-5 h-5 rounded-full ${getStatusIndex() >= 50 ? 'bg-yellow border-yellow' : 'bg-white'}`} />
-            <span className={`text-sm ${getStatusIndex() >= 50 ? 'text-yellow' : 'text-white'}`}>
+            <div
+              className={`w-5 h-5 rounded-full ${
+                getStatusIndex() >= 50 ? "bg-yellow border-yellow" : "bg-white"
+              }`}
+            />
+            <span
+              className={`text-sm ${
+                getStatusIndex() >= 50 ? "text-yellow" : "text-white"
+              }`}
+            >
               Hazırlanıyor
             </span>
           </div>
 
           <div className="flex flex-col items-end gap-1">
-            <div className={`w-5 h-5 rounded-full ${getStatusIndex() >= 100 ? 'bg-yellow border-yellow' : 'bg-white'}`} />
-            <span className={`text-sm ${getStatusIndex() >= 100 ? 'text-yellow' : 'text-white'}`}>
+            <div
+              className={`w-5 h-5 rounded-full ${
+                getStatusIndex() >= 100 ? "bg-yellow border-yellow" : "bg-white"
+              }`}
+            />
+            <span
+              className={`text-sm ${
+                getStatusIndex() >= 100 ? "text-yellow" : "text-white"
+              }`}
+            >
               Teslim Edildi
             </span>
           </div>

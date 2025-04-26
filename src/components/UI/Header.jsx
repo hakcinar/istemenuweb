@@ -34,11 +34,11 @@ export default function Header() {
       <div className="flex justify-between items-center px-4 py-4">
         <Link
           href={`/${restaurantNo}/${tableNo}`}
-          className="text-yellow text-lg font-bold"
+          className="text-yellow text-lg font-medium"
         >
           {title}
         </Link>
-        <h5 className="text-yellow text-xl font-bold">iste</h5>
+        <h5 className="text-yellow text-xl font-medium">iste</h5>
       </div>
     </header>
   );

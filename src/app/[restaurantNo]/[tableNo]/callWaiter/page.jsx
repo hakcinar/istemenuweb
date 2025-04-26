@@ -8,7 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 const Page = ({ params: { restaurantNo, tableNo } }) => {
   const [waiterLoading, setWaiterLoading] = useState(false);
   const [billLoading, setBillLoading] = useState(false);
-  const bellIcon = <FontAwesomeIcon className="font-bold" icon={faBell} />;
+  const bellIcon = <FontAwesomeIcon className="font-medium" icon={faBell} />;
 
   const spinner = (
     <FontAwesomeIcon className="font-bold animate-spin" icon={faSpinner} />
@@ -70,7 +70,7 @@ const Page = ({ params: { restaurantNo, tableNo } }) => {
           style: {
             background: "#FEFE00",
             color: "#000000",
-            fontWeight: "bold",
+            fontWeight: "medium",
           },
         }
       );
@@ -92,18 +92,20 @@ const Page = ({ params: { restaurantNo, tableNo } }) => {
 
   return (
     <div className="text-white flex flex-1 flex-col px-4">
-      <h1 className="text-white text-2xl mt-4 font-bold mb-2">Garson Çağır</h1>
+      <h1 className="text-white text-2xl mt-4 font-medium mb-2">
+        Garson Çağır
+      </h1>
 
       <div className="flex flex-col gap-4">
         <div className="flex flex-col bg-gray p-4 rounded-xl">
-          <h1 className="text-yellow text-lg font-bold mb-1">Hesap İste</h1>
+          <h1 className="text-yellow text-lg font-medium mb-1">Hesap İste</h1>
           <p className="text-white text-sm mb-4">
             Hesap istemek için tıklayınız
           </p>
           <button
             onClick={handleBillRequest}
             disabled={billLoading}
-            className="text-black font-bold flex justify-between items-center bg-yellow border-2 rounded-xl text-xl border-yellow outline-none px-4 py-2 w-full"
+            className="text-black font-medium flex justify-between items-center bg-yellow border-2 rounded-xl text-xl border-yellow outline-none px-4 py-2 w-full"
           >
             {billLoading ? "Hesap İsteğiniz İletiliyor..." : "Hesap İste"}{" "}
             {billLoading ? spinner : bellIcon}
@@ -111,14 +113,14 @@ const Page = ({ params: { restaurantNo, tableNo } }) => {
         </div>
 
         <div className="flex flex-col bg-gray p-4 rounded-xl">
-          <h1 className="text-yellow text-lg font-bold mb-1">Garson Çağır</h1>
+          <h1 className="text-yellow text-lg font-medium mb-1">Garson Çağır</h1>
           <p className="text-white text-sm mb-4">
             Garson çağırmak için tıklayınız.
           </p>
           <button
             onClick={handleWaiterCall}
             disabled={waiterLoading}
-            className="text-black font-bold flex justify-between items-center bg-yellow border-2 rounded-xl text-xl border-yellow outline-none px-4 py-2 w-full"
+            className="text-black font-medium flex justify-between items-center bg-yellow border-2 rounded-xl text-xl border-yellow outline-none px-4 py-2 w-full"
           >
             {waiterLoading ? "Garson Çağrınız İletiliyor..." : "Garson Çağır"}{" "}
             {waiterLoading ? spinner : bellIcon}
@@ -135,7 +137,7 @@ const Page = ({ params: { restaurantNo, tableNo } }) => {
         toastStyle={{
           backgroundColor: "#FEFE00",
           color: "#000000",
-          fontWeight: "bold",
+          fontWeight: "medium",
         }}
       />
     </div>
