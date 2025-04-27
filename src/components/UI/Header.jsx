@@ -38,7 +38,7 @@ export default function Header() {
         >
           {title}
         </Link>
-        <h5 className="text-yellow text-xl font-medium">iste</h5>
+        <h5 className="text-yellow text-xl font-extrabold">iste</h5>
       </div>
     </header>
   );

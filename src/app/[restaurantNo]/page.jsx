@@ -7,7 +7,7 @@ import Loader from "@/components/loader";
 
 const Page = ({ params: { restaurantNo } }) => {
   const [tables, setTables] = useState([]);
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     getAllTableList();
     console.log(restaurantNo);
@@ -16,10 +16,10 @@ const Page = ({ params: { restaurantNo } }) => {
     const data = await getTableList(restaurantNo.restaurantNo);
     console.log(data);
     setTables(data);
-    setLoading(false)
+    setLoading(false);
   };
-  const emptyTable = "font-bold text-lime-500";
-  const busyTable = "font-bold text-red-500";
+  const emptyTable = "font-medium text-lime-500";
+  const busyTable = "font-medium text-red-500";
   console.log(tables);
   return (
     <div className="bg-black flex-1 text-white px-4">
