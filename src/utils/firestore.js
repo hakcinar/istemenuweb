@@ -182,8 +182,15 @@ const assignWaiter = async (restaurantNo, tableNo) => {
           `database/dev/restaurants/${restaurantNo}/waiters/${existingOrder.waiter.mail}`
         )
       );
-
-      if (existingWaiterDoc.exists() && existingWaiterDoc.data().isAvailable) {
+      console.log(
+        "Existing waiter document:",
+        existingWaiterDoc.data().selectedTables
+      );
+      if (
+        existingWaiterDoc.exists() &&
+        existingWaiterDoc.data().isAvailable &&
+        existingWaiterDoc.data().selectedTables.includes(tableNo)
+      ) {
         const existingWaiter = existingWaiterDoc.data();
         if (existingWaiter.isAvailable && existingWaiter.fcmToken) {
           // Mevcut garsonu döndür

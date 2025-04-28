@@ -1,8 +1,9 @@
 import React from "react";
 import ProgressBar from "@ramonak/react-progress-bar";
 import Link from "next/link";
+import { useState, useEffect } from "react";
+import { getOrder } from "@/utils/firestore";
 const OrderStatus = ({ status, href }) => {
-  // Status can be: "Sipariş Alındı", "Hazırlanıyor", "Teslim Edildi"
   const getStatusIndex = () => {
     switch (status) {
       case "pending":

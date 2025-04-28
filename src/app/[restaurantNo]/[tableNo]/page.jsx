@@ -26,10 +26,18 @@ const Page = ({ params: { restaurantNo, tableNo } }) => {
         (position) => {
           const { latitude, longitude } = position.coords;
           resolve({ latitude, longitude });
+          console.log("User Location:", latitude, longitude);
+          localStorage.setItem("userLatitude", latitude);
+          localStorage.setItem("userLongitude", longitude);
         },
         (error) => {
           console.error("Error getting user location:", error);
           reject(error);
+        },
+        {
+          enableHighAccuracy: true,
+          timeout: 5000,
+          maximumAge: 0,
         }
       );
     });
