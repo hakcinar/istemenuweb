@@ -20,7 +20,9 @@ const Page = ({ params: { restaurantNo, tableNo } }) => {
   const [order, setOrder] = useState(null);
   const [orderLoading, setOrderLoading] = useState(true);
   const [distanceError, setDistanceError] = useState(true);
+  const [locationLoading, setLocationLoading] = useState(false);
   const getUserLocation = async () => {
+    setLocationLoading(true);
     return new Promise((resolve, reject) => {
       navigator.geolocation.getCurrentPosition(
         (position) => {
@@ -29,10 +31,12 @@ const Page = ({ params: { restaurantNo, tableNo } }) => {
           console.log("User Location:", latitude, longitude);
           localStorage.setItem("userLatitude", latitude);
           localStorage.setItem("userLongitude", longitude);
+          setLocationLoading(false);
         },
         (error) => {
           console.error("Error getting user location:", error);
           reject(error);
+          setLocationLoading(false);
         },
         {
           enableHighAccuracy: true,
@@ -110,6 +114,12 @@ const Page = ({ params: { restaurantNo, tableNo } }) => {
 
   return loading ? (
     <Loader />
+  ) : locationLoading ? ( // ← BURAYI EKLEDİK
+    <div className="w-full flex flex-col px-4 pt-3 flex-1 items-center bg-black">
+      <p className="text-white text-center mt-10">
+        Konumunuz kontrol ediliyor...
+      </p>
+    </div>
   ) : distanceError ? (
     <div className="w-full flex flex-col px-4 pt-3 flex-1 items-center bg-black">
       <p className="text-white text-center mt-10">
