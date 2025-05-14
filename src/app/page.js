@@ -5,7 +5,8 @@ import Image from "next/image"; // Next.js'in Image bileşeni
 import tanitimResmi from "@/images/Tanıtım-1.png"; // Tanıtım resmi
 import tanitimResmi2 from "@/images/Tanıtım-2.png"; // İkinci tanıtım resmi
 import Slider from "@/components/MainSlider"; // Ana kaydırıcı bileşeni
-
+import menüResmi from "@/images/Menü-1.png";
+import Link from "next/link"; // Next.js'in Link bileşeni
 const Page = () => {
   const [menuOpen, setMenuOpen] = useState(false); // Menü durumu
 
@@ -96,6 +97,41 @@ const Page = () => {
       <div>
         <Slider />
       </div>
+      <div>
+        <h3 className="text-yellow font-bold ">Menü Yönetimi</h3>
+        <p className="text-white text-xs mb-4">
+          Kolay bir şekilde menünü hazırla, anlık olarak müşterilerinin
+          masalarıdaki QR kodlarını taratarak menünüzü görsün.
+        </p>
+        <Image
+          src={menüResmi}
+          alt="Tanıtım Resmi"
+          priority
+          className="w-full h-auto"
+        />
+      </div>
+      <footer className="mb-4">
+        <h5 className="text-yellow font-bold mt-4 mb-2">İletişim</h5>
+        <div className="flex flex-col justify-between text-white">
+          <div>
+            <span className="text-yellow text-sm font-bold mb-2">
+              E-posta:{" "}
+            </span>
+            <Link
+              className="text-white text-sm font-bold"
+              href="mailto:destekistee@gmail.com"
+            >
+              destekistee@gmail.com
+            </Link>
+          </div>
+          <span className="text-yellow text-sm font-bold mb-2">
+            Telefon:{" "}
+            <Link className="text-white text-sm" href="tel:+905312590172">
+              0 531 259 01 72
+            </Link>
+          </span>
+        </div>
+      </footer>
     </div>
   );
 };
