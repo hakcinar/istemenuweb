@@ -6,7 +6,7 @@ import slide3 from "@/images/Slider-3.png";
 import Image from "next/image"; // Next.js'in Image bileşeni
 const Slider = () => {
   return (
-    <Swiper spaceBetween={20} slidesPerView={1}>
+    <Swiper spaceBetween={20} slidesPerView={1.2}>
       <SwiperSlide className="mb-4">
         <div className="bg-darkgray text-white p-4 rounded-md">
           <h5 className="text-yellow text-lg font-bold mb-2">Masa Yönetimi</h5>

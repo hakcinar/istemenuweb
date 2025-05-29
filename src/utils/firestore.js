@@ -6,6 +6,7 @@ import {
   doc,
   setDoc,
   serverTimestamp,
+  addDoc,
 } from "firebase/firestore";
 import app from "@/firebaseConfig";
 
@@ -170,6 +171,24 @@ export const getWaiterList = async (restaurantNo) => {
     return [];
   }
 };
+const addNotification = async (restaurantNo, tableNo, type) => {
+  try {
+    // notifications koleksiyonuna yeni bir belge ekle
+    await addDoc(
+      collection(db, `database/dev/restaurants/${restaurantNo}/notifications`),
+      {
+        tableNo,
+        restaurantNo,
+        type,
+        timestamp: serverTimestamp(),
+      }
+    );
+    return true;
+  } catch (error) {
+    console.error("Error setting notification: ", error);
+    return false;
+  }
+};
 const assignWaiter = async (restaurantNo, tableNo) => {
   try {
     // Önce mevcut siparişi kontrol et
@@ -186,11 +205,7 @@ const assignWaiter = async (restaurantNo, tableNo) => {
         "Existing waiter document:",
         existingWaiterDoc.data().selectedTables
       );
-      if (
-        existingWaiterDoc.exists() &&
-        existingWaiterDoc.data().isAvailable &&
-        existingWaiterDoc.data().selectedTables.includes(tableNo)
-      ) {
+      if (existingWaiterDoc.exists() && existingWaiterDoc.data().isAvailable) {
         const existingWaiter = existingWaiterDoc.data();
         if (existingWaiter.isAvailable && existingWaiter.fcmToken) {
           // Mevcut garsonu döndür
@@ -265,4 +280,5 @@ export {
   getOrder,
   assignWaiter,
   calculateDistance,
+  addNotification,
 };

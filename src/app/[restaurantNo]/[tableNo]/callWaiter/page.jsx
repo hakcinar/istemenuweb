@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBell, faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { toast, ToastContainer } from "react-toastify";
+import { addNotification } from "@/utils/firestore";
 import "react-toastify/dist/ReactToastify.css";
 
 const Page = ({ params: { restaurantNo, tableNo } }) => {
@@ -87,8 +88,14 @@ const Page = ({ params: { restaurantNo, tableNo } }) => {
     }
   };
 
-  const handleWaiterCall = () => sendNotification("waiter");
-  const handleBillRequest = () => sendNotification("bill");
+  const handleWaiterCall = () => {
+    sendNotification("waiter");
+    addNotification(restaurantNo, tableNo, "waiter");
+  };
+  const handleBillRequest = () => {
+    sendNotification("bill");
+    addNotification(restaurantNo, tableNo, "bill");
+  };
 
   return (
     <div className="text-white flex flex-1 flex-col px-4">
